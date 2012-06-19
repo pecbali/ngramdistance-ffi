@@ -37,7 +37,13 @@ The module has a
 single function:
 
     require 'ngramdistance'
-    NGramDistance.distance("string1", "string2") == 1.0 # returns true
+    NGramDistance.distance("string1", "string2",3) == 1.0 # returns true
+    
+Third argument is the ngram granularity.
+1 -> unigram
+2 -> bigram
+3 -> trigram
+
 The code is made available under the following BSD license:
 
 Copyright (c) 2009, Bali.
