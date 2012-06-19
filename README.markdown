@@ -55,8 +55,8 @@ The code is made available under the following BSD license:
 Author
 ======
 
-Copyright (c) 2012, Bali.
-I ported from java source code of lucene-3.0.2.
+* Copyright (c) 2012, Bali (mailbali@gmail.com)
+* I ported from java source code of lucene-3.0.2.
 
 License
 =======
