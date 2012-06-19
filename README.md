@@ -41,14 +41,28 @@ The module has a
 single function:
 
     require 'ngramdistance'
-    NGramDistance.distance("string1", "string1",3) # returns 1.0
+    NGramDistance.distance("string1", "string1") # returns 1.0
     NGramDistance.distance("university", "univearsitty",3) # returns 0.750000
+
+
+method signature is distance(source,target,ngram=3,mode=PROPOSITIONAL)
 
 Third argument is the ngram granularity.
 * 1 -> unigram
 * 2 -> bigram
 * 3 -> trigram
 
+default argument is 3 (tri-gram)
+
+Fourth argument is mode of operation. We have 3 modes defined
+* PROPOSITIONAL=0
+	Propositional Computes the distance between n-grams with partial matching
+* BINARY=1
+	Only considers 2 n-grams match when they are exactly the same
+* COMPLEX=2
+	Uses ngramdistance with Binary option and 1-gram match for the n-gram match. 
+
+default is PROPOSITIONAL mode.
 
 Author
 ======
