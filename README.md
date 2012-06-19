@@ -3,7 +3,8 @@ ngramdistance-ffi
 
 Converted to FFI by Bali for Ruby portability.
 
-This gem originally based on ngram distance.
+This gem originally based on ngram distance or similarity algorithm from Proceedings of the Twelfth International 
+Conference on String Processing and Information Retrieval (SPIRE 2005).
 
 Tested on:
 
