@@ -45,13 +45,11 @@ single function:
     NGramDistance.distance("university", "univearsitty",3) # returns 0.750000
 
 Third argument is the ngram granularity.
-1 -> unigram
-2 -> bigram
-3 -> trigram
+* 1 -> unigram
+* 2 -> bigram
+* 3 -> trigram
 
 
-
-The code is made available under the following BSD license:
 Author
 ======
 
