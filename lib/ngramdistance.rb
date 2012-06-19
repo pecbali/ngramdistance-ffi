@@ -8,5 +8,5 @@ module NGramDistance
   candidates = ['.bundle', '.dylib', ''].map { |ext| library + ext }
   ffi_lib(candidates)
   
-  attach_function :distance, :ngramdistance, [:string, :string, :int], :float
+  attach_function :distance, :ngramdistance, [:string, :string, :int, :int], :float
 end
