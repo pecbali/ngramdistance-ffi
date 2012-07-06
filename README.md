@@ -41,6 +41,7 @@ The module has a
 following functions:
 
 1. distance
+
     require 'ngramdistance'
     NGramDistance.distance("string1", "string1") # returns 1.0
     NGramDistance.distance("university", "univearsitty",3) # returns 0.750000
