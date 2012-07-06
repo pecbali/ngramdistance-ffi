@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ngramdistance-ffi}
-  s.version = "1.0.0"
+  s.version = "1.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Bali"]
-  s.date = %q{2012-06-18}
+  s.date = %q{2012-07-06}
   s.description = %q{Provides a fast, cross-Ruby implementation of the  ngramdistance distance algorithm.}
   s.email = %q{mailbali@gmail.com}
   s.extensions = ["ext/ngramdistance/extconf.rb"]
