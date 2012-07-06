@@ -41,7 +41,7 @@ The module has a
 following functions:
 
 * distance
-
+----------
     require 'ngramdistance'
     NGramDistance.distance("string1", "string1") # returns 1.0
     NGramDistance.distance("university", "univearsitty",3) # returns 0.750000
@@ -66,7 +66,7 @@ Fourth argument is mode of operation. We have 3 modes defined
 default is PROPOSITIONAL mode.
 
 * token_sort_distance
-	
+---------------------	
 	require 'ngramdistance'
     NGramDistance.token_sort_distance("hello bello", "bello hello") # returns 1.0
 
@@ -80,7 +80,7 @@ method signature is token_sort_distance(source,target,regex=' ',ngram=3,mode=PRO
 the arguments are same as distance function but with extra argument regex, character or string to split source and target
 
 * token_set_distance
-	
+--------------------	
 	require 'ngramdistance'
     NGramDistance.token_sort_distance("hello", "hello hello") # returns 1.0
     
