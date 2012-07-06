@@ -40,7 +40,7 @@ strings with no matching characters will return a distance of 0.
 The module has a
 following functions:
 
-1. distance
+* distance
 
     require 'ngramdistance'
     NGramDistance.distance("string1", "string1") # returns 1.0
@@ -65,7 +65,7 @@ Fourth argument is mode of operation. We have 3 modes defined
 
 default is PROPOSITIONAL mode.
 
-2. token_sort_distance
+* token_sort_distance
 	
 	require 'ngramdistance'
     NGramDistance.token_sort_distance("hello bello", "bello hello") # returns 1.0
@@ -79,7 +79,7 @@ We then compare the transformed strings with a simple distance(). That nicely so
 method signature is token_sort_distance(source,target,regex=' ',ngram=3,mode=PROPOSITIONAL)
 the arguments are same as distance function but with extra argument regex, character or string to split source and target
 
-3. token_set_distance
+* token_set_distance
 	
 	require 'ngramdistance'
     NGramDistance.token_sort_distance("hello", "hello hello") # returns 1.0
