@@ -71,7 +71,9 @@ default is PROPOSITIONAL mode.
     NGramDistance.token_sort_distance("hello bello", "bello hello") # returns 1.0
 
 The token sort approach involves tokenizing the string in question, sorting the tokens alphabetically, and then joining them back into a string. For example:
-"new york mets vs atlanta braves"   →→  "atlanta braves mets new vs york
+	
+	"new york mets vs atlanta braves"   →→  "atlanta braves mets new vs york" 
+	
 We then compare the transformed strings with a simple distance(). That nicely solves our ordering problem, as our helper function below indicates:
 	
 	NGramDistance.token_sort_distance("New York Mets vs Atlanta Braves", "Atlanta Braves vs New York Mets") ⇒ 1.0
