@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Ngramdistance-ffi : Provides a fast, cross-Ruby implementation of the  ngramdistance distance algorithm" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Ngramdistance-ffi</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/pecbali/ngramdistance-ffi">View on GitHub</a>
+
+          <h1 id="project_title">Ngramdistance-ffi</h1>
+          <h2 id="project_tagline">Provides a fast, cross-Ruby implementation of the  ngramdistance distance algorithm</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/pecbali/ngramdistance-ffi/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/pecbali/ngramdistance-ffi/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>ngramdistance-ffi</h1>
+
+<p>Converted to FFI by Bali for Ruby portability.</p>
+
+<p>This gem originally based on ngram distance or similarity algorithm from Proceedings of the Twelfth International 
+Conference on String Processing and Information Retrieval (SPIRE 2005).</p>
+
+<ul>
+<li>This program was ported by hand from lucene-3.0.2. (lucene is Java product)</li>
+<li>It supports only ngram distance algorithm.</li>
+</ul><p>Tested on:</p>
+
+<ul>
+<li>MRI 1.9.2</li>
+</ul><h1>Known Issues</h1>
+
+<ul>
+<li>The C extension uses <code>char*</code> strings, and so Unicode strings will give incorrect distances.</li>
+</ul><h1>Including in Gemfile</h1>
+
+<pre><code>gem 'ngramdistance-ffi', :require =&gt; 'ngramdistance'
+</code></pre>
+
+<h1>Original README</h1>
+
+<p>N-Gram version of edit distance based on paper by Grzegorz Kondrak, 
+"N-gram similarity and distance". Proceedings of the Twelfth International 
+Conference on String Processing and Information Retrieval (SPIRE 2005), pp. 115-126, 
+Buenos Aires, Argentina, November 2005. 
+<a href="http://www.cs.ualberta.ca/%7Ekondrak/papers/spire05.pdf">http://www.cs.ualberta.ca/~kondrak/papers/spire05.pdf</a></p>
+
+<p>This implementation uses the position-based optimization to compute partial
+matches of n-gram sub-strings and adds a null-character prefix of size n-1 
+so that the first character is contained in the same number of n-grams as 
+a middle character.  Null-character prefix matches are discounted so that 
+strings with no matching characters will return a distance of 0.</p>
+
+<p>The module has a
+following functions:</p>
+
+<h2>* distance</h2>
+
+<pre><code>require 'ngramdistance'
+NGramDistance.distance("string1", "string1") # returns 1.0
+NGramDistance.distance("university", "univearsitty",3) # returns 0.750000
+</code></pre>
+
+<p>method signature is distance(source,target,ngram=3,mode=PROPOSITIONAL)</p>
+
+<p>Third argument is the ngram granularity.</p>
+
+<ul>
+<li>1 -&gt; unigram</li>
+<li>2 -&gt; bigram</li>
+<li>3 -&gt; trigram</li>
+</ul><p>default argument is 3 (tri-gram)</p>
+
+<p>Fourth argument is mode of operation. We have 3 modes defined</p>
+
+<ul>
+<li>PROPOSITIONAL=0
+Propositional Computes the distance between n-grams with partial matching</li>
+<li>BINARY=1
+Only considers 2 n-grams match when they are exactly the same</li>
+<li>COMPLEX=2
+Uses ngramdistance with Binary option and 1-gram match for the n-gram match. </li>
+</ul><p>default is PROPOSITIONAL mode.</p>
+
+<h2>* token_sort_distance</h2>
+
+<pre><code>require 'ngramdistance'
+NGramDistance.token_sort_distance("hello bello", "bello hello") # returns 1.0
+</code></pre>
+
+<p>The token sort approach involves tokenizing the string in question, sorting the tokens alphabetically, and then joining them back into a string. For example:</p>
+
+<pre><code>"new york mets vs atlanta braves"   →→  "atlanta braves mets new vs york" 
+</code></pre>
+
+<p>We then compare the transformed strings with a simple distance(). That nicely solves our ordering problem, as our helper function below indicates:</p>
+
+<pre><code>NGramDistance.token_sort_distance("New York Mets vs Atlanta Braves", "Atlanta Braves vs New York Mets") ⇒ 1.0
+</code></pre>
+
+<p>method signature is token_sort_distance(source,target,regex=' ',ngram=3,mode=PROPOSITIONAL)
+the arguments are same as distance function but with extra argument regex, character or string to split source and target</p>
+
+<h2>* token_set_distance</h2>
+
+<pre><code>require 'ngramdistance'
+NGramDistance.token_sort_distance("hello", "hello hello") # returns 1.0
+</code></pre>
+
+<p>The token set approach is similar, but a little bit more flexible. Here, we tokenize both strings, but instead of immediately sorting and comparing, we split the tokens into two groups: intersection and remainder. We use those sets to build up a comparison string.
+Here is an illustrative example:
+    s1 = "mariners vs angels"
+    s2 = "los angeles angels of anaheim at seattle mariners"</p>
+
+<p>Using the token sort method isn't that helpful, because the second (longer) string has too many extra tokens that get interleaved with the sort. We'd end up comparing:</p>
+
+<pre><code>t1 = "angels mariners vs"
+t2 = "anaheim angeles angels los mariners of seattle vs"
+</code></pre>
+
+<p>Not very useful. Instead, the set method allows us to detect that "angels" and "mariners" are common to both strings, and separate those out (the set intersection). Now we construct and compare strings of the following form</p>
+
+<pre><code>t0 = [SORTED_INTERSECTION]
+t1 = [SORTED_INTERSECTION] + [SORTED_REST_OF_STRING1]
+t2 = [SORTED_INTERSECTION] + [SORTED_REST_OF_STRING2]
+</code></pre>
+
+<p>And then compare each pair.</p>
+
+<p>The intuition here is that because the SORTED_INTERSECTION component is always exactly the same, the scores increase when (a) that makes up a larger percentage of the full string, and (b) the string remainders are more similar. In our example</p>
+
+<pre><code>t0 = "angels mariners"
+t1 = "angels mariners vs"
+t2 = "angels mariners anaheim angels"
+NGramDistance.distance(t0, t1) ⇒ 0.83333
+NGramDistance.distance(t0, t2) ⇒ 0.4838
+NGramDistance.distance(t1, t2) ⇒ 0.54828
+NGramDistance.token_set_distance(t0,t2) ⇒ 0.6521
+
+
+NGramDistance.token_set_distance("hello hello world", "hello world") ⇒ 1.0
+</code></pre>
+
+<p>method signature is token_set_distance(source,target,regex=' ',ngram=3,mode=PROPOSITIONAL)
+the arguments are same as distance function but with extra argument regex, character or string to split source and target</p>
+
+<h1>Author</h1>
+
+<ul>
+<li>Copyright (c) 2012, Bali (<a href="mailto:mailbali@gmail.com">mailbali@gmail.com</a>)</li>
+<li>I ported from java source code of lucene-3.0.2.</li>
+</ul><h1>License</h1>
+
+<ul>
+<li>Apache  2.0 LICENSE</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Ngramdistance-ffi maintained by <a href="https://github.com/pecbali">pecbali</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
